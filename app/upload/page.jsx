@@ -179,7 +179,7 @@ export default function Page() {
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium py-2 px-4 rounded-xl transition-all shadow-sm w-full justify-center border border-zinc-700"
                             >
-                                <span>View Document</span>
+                                <span>View Documentt</span>
                                 <ExternalLink className="w-3 h-3" />
                             </a>
                         </div>
