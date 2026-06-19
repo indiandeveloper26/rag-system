@@ -2,7 +2,8 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Loader2, RefreshCw, AlertCircle } from "lucide-react";
-import axios from "axios";
+import api from "../../src/lib/api";
+
 
 export default function Page() {
     const [messages, setMessages] = useState([
@@ -46,8 +47,8 @@ export default function Page() {
 
         try {
             // 2. Hit your backend endpoint
-            const { data } = await axios.post(
-                "http://localhost:5000/ai/ask",
+            const { data } = await api.post(
+                "/ai/ask",
                 { question: userQuestion },
                 {
                     headers: {

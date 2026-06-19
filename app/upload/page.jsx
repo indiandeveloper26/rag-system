@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { UploadCloud, FileText, CheckCircle2, Loader2, ExternalLink, Copy } from "lucide-react";
+import api from "../../src/lib/api";
 
 export default function Page() {
     const [pdfUrl, setPdfUrl] = useState("");
@@ -20,11 +21,10 @@ export default function Page() {
             return;
         }
 
-        // UI state updates
         setFileName(file.name);
         setFileSize((file.size / (1024 * 1024)).toFixed(2));
         setLoading(true);
-        setLoadingStatus("Cloudinary par upload ho raha hai..."); // 1st Step text
+        setLoadingStatus("Cloudinary par upload ho raha hai...");
         setPdfUrl("");
 
         const formData = new FormData();
@@ -33,8 +33,10 @@ export default function Page() {
         formData.append("resource_type", "raw");
 
         try {
-            // 1. Cloudinary Upload Request
-            const res = await fetch(
+            // ==========================
+            // 1. Upload PDF to Cloudinary
+            // ==========================
+            const cloudinaryRes = await fetch(
                 "https://api.cloudinary.com/v1_1/dsmcyigy6/raw/upload",
                 {
                     method: "POST",
@@ -42,50 +44,52 @@ export default function Page() {
                 }
             );
 
-            const data = await res.json();
+            const cloudinaryData = await cloudinaryRes.json();
 
-            if (data.secure_url) {
-                console.log("PDF Cloudinary URL:", data.secure_url);
+            if (!cloudinaryData.secure_url) {
+                alert("Cloudinary Upload Failed!");
+                return;
+            }
 
-                // State update: Status badal kar RAG indexing loading text show karega
-                setLoadingStatus("RAG Pipeline me index ho raha hai...");
+            console.log(
+                "PDF Cloudinary URL:",
+                cloudinaryData.secure_url
+            );
 
-                // 2. Local RAG API Call (Ab ye request loading block ke andar hi wait karegi)
-                const ragRes = await fetch(
-                    "http://localhost:5000/ai",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            pdfUrl: data?.secure_url,
-                        }),
-                    }
-                );
+            // ==========================
+            // 2. RAG Processing
+            // ==========================
+            setLoadingStatus("RAG Pipeline me index ho raha hai...");
 
-                const ragData = await ragRes.json();
-                console.log("RAG Response:", ragData);
+            const { data: ragData } = await api.post("/ai", {
+                pdfUrl: cloudinaryData.secure_url,
+            });
 
-                if (ragData.success) {
-                    // Jab dono API hit ho jayengi, tabhi URL set hoga aur success UI dikhega
-                    setPdfUrl(data.secure_url);
-                } else {
-                    alert("Cloudinary upload ho gaya, par RAG pipeline me indexing fail ho gayi: " + (ragData.message || "Error"));
-                }
+            console.log("RAG Response:", ragData);
+
+            if (ragData.success) {
+                setPdfUrl(cloudinaryData.secure_url);
+
+                console.log('successful')
             } else {
-                alert("Cloudinary Upload failed! Configuration check karein.");
+                alert(
+                    `Cloudinary upload successful, but RAG indexing failed: ${ragData.message || "Unknown Error"
+                    }`
+                );
             }
         } catch (error) {
-            console.error("Error:", error);
-            alert("Something went wrong during the pipeline integration!");
+            console.error("Upload Error:", error);
+
+            alert(
+                error?.response?.data?.message ||
+                error.message ||
+                "Something went wrong!"
+            );
         } finally {
-            // End loading only when everything finishes
             setLoading(false);
             setLoadingStatus("");
         }
     };
-
     return (
         <div className="min-h-screen bg-zinc-950 text-white flex flex-col items-center justify-center p-6">
             <div className="max-w-md w-full bg-zinc-900 border border-zinc-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
