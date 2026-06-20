@@ -48,7 +48,7 @@ export default function Page() {
         try {
             // 2. Hit your backend endpoint
             const { data } = await api.post(
-                "/ai/ask",
+                "/rag/ask",
                 { question: userQuestion },
                 {
                     headers: {

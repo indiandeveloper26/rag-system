@@ -12,7 +12,8 @@ import {
     Settings,
     HelpCircle,
     Layers,
-    User
+    User,
+    Import
 } from "lucide-react";
 
 import { signOut } from "firebase/auth";
@@ -21,8 +22,8 @@ import { useRouter } from "next/navigation";
 
 import { useUserStore } from "../../src/lib/store/authStore";
 
-
-
+import api from "../../src/lib/api"
+import { VERSION } from "../../src/lib/version"
 
 
 
@@ -65,14 +66,13 @@ export default function Sidebar() {
 
 
             // 2. Backend cookie clear
-            const res = await fetch("/api/logout", {
-
-                method: "POST",
-
-                credentials: "include"
-
-            });
-
+            const res = await api.post(
+                "/auth/logout",
+                {},
+                {
+                    withCredentials: true
+                }
+            );
 
 
             const data = await res.json();
@@ -192,6 +192,7 @@ export default function Sidebar() {
                     <div className="truncate flex-1">
                         <h4 className="text-xs font-semibold text-slate-200 truncate">{user?.name}</h4>
                         <p className="text-[10px] text-slate-500 truncate">{user?.email}</p>
+                        <p className="text-[10px] text-slate-500 truncate">{VERSION}</p>
                     </div>
                 </div>
             </div>

@@ -6,8 +6,9 @@ import { auth, googleProvider } from "../../src/lib/firebas";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "../../src/lib/store/authStore";
 import { Loader2, ShieldAlert, Sparkles, KeyRound } from "lucide-react";
+import api from "../../src/lib/api";
 
-export default function Login() {
+export default function page() {
     const router = useRouter();
     const { loginUser } = useUserStore();
 
@@ -15,56 +16,159 @@ export default function Login() {
     const [isLoading, setIsLoading] = useState(false);
     const [authError, setAuthError] = useState("");
 
+
     const googleLogin = async () => {
         setIsLoading(true);
         setAuthError("");
 
         try {
-            // 1. Firebase auth trigger
-            const result = await signInWithPopup(auth, googleProvider);
+
+            // Firebase Google Login
+            const result = await signInWithPopup(
+                auth,
+                googleProvider
+            );
+
             const user = result.user;
 
+
+            // Firebase ID Token lo
+            const idToken = await user.getIdToken();
+
+
             const userData = {
-                uid: user.uid,
+                idToken,
                 name: user.displayName,
                 email: user.email,
-                photo: user.photoURL
+                photoURL: user.photoURL,
+                googleId: user.uid,
             };
 
-            // Global State management update
-            loginUser(userData);
-            console.log('Firebase User logged:', user);
 
-            // 2. Syncing with backend server
-            const response = await fetch("/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(userData)
-            });
 
-            const data = await response.json();
-            console.log('Backend sync status:', data);
+            console.log('datatat', userData)
 
-            if (data?.success) {
+
+            // Backend sync
+            const response = await api.post(
+                "/auth/google",
+                userData
+
+            );
+
+
+            const data = response.data;
+
+
+
+
+
+            console.log(
+                "Backend response:",
+                data
+            );
+
+
+            if (data.success) {
+
+                loginUser(data.user);
+
                 router.push("/");
-            } else {
-                throw new Error(data?.message || "Backend database sync failed.");
+
             }
+            else {
+                throw new Error(data.message);
+            }
+
 
         } catch (error) {
-            console.error("Login Engine Error:", error);
-            // Handle cancel auth or direct network errors safely
-            if (error.code === "auth/popup-closed-by-user") {
-                setAuthError("Sign-in process beech me close kar diya gaya tha.");
-            } else {
-                setAuthError(error.message || "Something went wrong during standard authentication.");
+
+            console.log(
+                "Google Login Error:",
+                error
+            );
+
+            if (
+                error.code ===
+                "auth/popup-closed-by-user"
+            ) {
+                setAuthError(
+                    "Login cancelled"
+                );
             }
-        } finally {
+            else {
+                setAuthError(
+                    error.message
+                );
+            }
+
+        }
+        finally {
             setIsLoading(false);
         }
     };
+
+
+
+
+
+
+
+
+
+
+
+
+    // const googleLogin = async () => {
+    //     setIsLoading(true);
+    //     setAuthError("");
+
+    //     try {
+    //         // 1. Firebase auth trigger
+    //         const result = await signInWithPopup(auth, googleProvider);
+    //         const user = result.user;
+
+    //         const userData = {
+    //             uid: user.uid,
+    //             name: user.displayName,
+    //             email: user.email,
+    //             photo: user.photoURL
+    //         };
+
+    //         // Global State management update
+    //         loginUser(userData);
+    //         console.log('Firebase User logged:', user);
+
+    //         // 2. Syncing with backend server
+    //         const response = await fetch("/api/login", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             },
+    //             body: JSON.stringify(userData)
+    //         });
+
+    //         const data = await response.json();
+    //         console.log('Backend sync status:', data);
+
+    //         if (data?.success) {
+    //             router.push("/");
+    //         } else {
+    //             throw new Error(data?.message || "Backend database sync failed.");
+    //         }
+
+    //     } catch (error) {
+    //         console.error("Login Engine Error:", error);
+    //         // Handle cancel auth or direct network errors safely
+    //         if (error.code === "auth/popup-closed-by-user") {
+    //             setAuthError("Sign-in process beech me close kar diya gaya tha.");
+    //         } else {
+    //             setAuthError(error.message || "Something went wrong during standard authentication.");
+    //         }
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    // };
 
     return (
         <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 relative overflow-hidden select-none">

@@ -61,7 +61,7 @@ export default function Page() {
             // ==========================
             setLoadingStatus("RAG Pipeline me index ho raha hai...");
 
-            const { data: ragData } = await api.post("/ai", {
+            const { data: ragData } = await api.post("/rag/upload", {
                 pdfUrl: cloudinaryData.secure_url,
             });
 
