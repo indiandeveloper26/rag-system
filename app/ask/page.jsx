@@ -182,7 +182,7 @@ export default function Page() {
                         <div className="flex flex-col items-start max-w-[80%]">
                             <div className="px-4 py-3.5 bg-slate-800/50 text-slate-400 border border-slate-700/40 rounded-2xl rounded-tl-none flex items-center gap-2 text-sm shadow-sm">
                                 <Loader2 size={16} className="animate-spin text-indigo-500" />
-                                <span>Chroma standard search & Llama answering...</span>
+                                <span>Chroma standard search & Llama answering.......</span>
                             </div>
                         </div>
                     </div>
