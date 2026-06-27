@@ -40,11 +40,18 @@ export default function Sidebar() {
 
     // Navigation Links Array (Dynamic structure)
     const menuItems = [
+<<<<<<< HEAD
         { name: "Dashboard", href: "/getcourse", icon: LayoutDashboard },
         { name: "Upload PDF", href: "/upload", icon: FileUp },
         { name: "RAG Chat", href: "/ask", icon: MessageSquare },
         { name: "mycourse", href: "/mycourse", icon: Settings },
         { name: "publihsbook", href: "/publihsbook", icon: Settings },
+=======
+        { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+        { name: "Upload PDF", href: "/upload", icon: FileUp },
+        { name: "RAG Chat", href: "/ask", icon: MessageSquare },
+        { name: "Settings", href: "/settings", icon: Settings },
+>>>>>>> 46f1e4fbeff72785eb514be76fdd5bb251d1f4e4
     ];
 
     const footerItems = [
