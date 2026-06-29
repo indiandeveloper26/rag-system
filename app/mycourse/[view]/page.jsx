@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import useCourseStore from '../../../src/lib/store/course';
+
+import { useRouter } from 'next/navigation';
 // Zustand store ko import kiya (apne folder structure ke mutabik path check kar lein)
 
 
@@ -11,6 +13,11 @@ const CoursePlayer = ({ enrollmentData }) => {
 
     // Dummy data ko poori tarah hata diya hai. Ab data ya toh props se aayega ya Zustand store se.
     const data = enrollmentData || selectedCourseFromStore;
+
+    let router = useRouter()
+
+
+    console.log('datatat', data._id)
 
     const [activeTab, setActiveTab] = useState('overview');
 
@@ -137,10 +144,22 @@ const CoursePlayer = ({ enrollmentData }) => {
             </div>
 
             {/* RIGHT SIDE: Sidebar (Lecture Playlist / Course Content) */}
+            return (
             <div className="w-full lg:w-96 bg-gray-850 border-t lg:border-t-0 lg:border-l border-gray-800 flex flex-col bg-gray-900/60 backdrop-blur-md">
-                <div className="p-4 border-b border-gray-800 bg-gray-800/20">
-                    <h2 className="font-bold text-lg text-white">Course Content</h2>
-                    <p className="text-xs text-gray-400 mt-0.5">1 Section • {course?.totalLessons || '0'} Lectures</p>
+                {/* Header with Refund Button */}
+                <div className="p-4 border-b border-gray-800 bg-gray-800/20 flex items-center justify-between">
+                    <div>
+                        <h2 className="font-bold text-lg text-white">Course Content</h2>
+                        <p className="text-xs text-gray-400 mt-0.5">1 Section • {course?.totalLessons || '0'} Lectures</p>
+                    </div>
+
+                    {/* Refund Button */}
+                    <button
+                        onClick={() => router.push(`/refund-ai/${data._id}`)} // Apni functionality yahan add karein
+                        className="px-3 py-1.5 text-xs font-medium text-red-400 bg-red-500/10 border border-red-500/20 rounded-md hover:bg-red-500 hover:text-white transition-all duration-200"
+                    >
+                        Request Refund
+                    </button>
                 </div>
 
                 {/* Playlist Items */}
@@ -168,6 +187,7 @@ const CoursePlayer = ({ enrollmentData }) => {
                     )}
                 </div>
             </div>
+            );
 
         </div>
     );
