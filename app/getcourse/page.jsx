@@ -134,12 +134,26 @@ export default function Page() {
                                     {/* Content */}
                                     <div className="p-6 flex-1 flex flex-col justify-between">
                                         <div>
-                                            <span className="text-xs font-bold text-indigo-600 tracking-widest uppercase block mb-2">
-                                                {course.category}
-                                            </span>
+                                            <div className="flex items-center space-x-6 py-2">
+                                                {/* Category Badge */}
+                                                <span className="px-2.5 py-1 text-xs font-semibold bg-indigo-50 text-indigo-600 rounded-md tracking-wider uppercase">
+                                                    {course.category}
+                                                </span>
+
+                                                {/* Instructor Info */}
+                                                <div className="flex items-center space-x-2 text-sm text-gray-600">
+                                                    <span className="font-medium text-gray-400">Instructor:</span>
+                                                    <span className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-200 cursor-pointer">
+                                                        {course.instructorname}
+                                                    </span>
+                                                </div>
+                                            </div>
+
                                             <h3 className="text-xl font-bold text-slate-800 line-clamp-2 mb-2 min-h-[56px]">
                                                 {course.title}
                                             </h3>
+
+
                                             <p className="text-sm text-slate-500 line-clamp-2 mb-4">
                                                 {course.description}
                                             </p>

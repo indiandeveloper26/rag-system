@@ -11,7 +11,8 @@ export default function page() {
     const { user, isLogin } = useUserStore();
 
 
-    console.log('userdatata', user)
+    console.log('userdatata', user.name
+    )
 
     // 1. Form Inputs State (Matching your Mongoose Schema)
     const [formData, setFormData] = useState({
@@ -126,6 +127,7 @@ export default function page() {
 
             const coursePayload = {
                 title: formData.title,
+                instructorname: user?.name,
                 description: formData.description,
                 category: formData.category,
                 level: formData.level,
