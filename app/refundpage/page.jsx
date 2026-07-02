@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../src/lib/api';
 import { useUserStore } from '../../src/lib/store/authStore';
 
-export default function RefundDashboard() {
+export default function page() {
     const [refunds, setRefunds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

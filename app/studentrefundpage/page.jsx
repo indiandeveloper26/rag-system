@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../src/lib/api';
 import { useUserStore } from '../../src/lib/store/authStore';
 
-export default function StudentRefundStatus() {
+export default function page() {
     const [refunds, setRefunds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -103,11 +103,11 @@ export default function StudentRefundStatus() {
 
                                 {/* Status Badges - Added 'admin_approved' support */}
                                 <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${refund.status === 'pending' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
-                                        refund.status === 'admin_approved' || refund.status === 'approved' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                                            'bg-rose-50 text-rose-700 border border-rose-200'
+                                    refund.status === 'admin_approved' || refund.status === 'approved' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                                        'bg-rose-50 text-rose-700 border border-rose-200'
                                     }`}>
                                     <span className={`h-1.5 w-1.5 rounded-full ${refund.status === 'pending' ? 'bg-amber-500' :
-                                            refund.status === 'admin_approved' || refund.status === 'approved' ? 'bg-emerald-500' : 'bg-rose-500'
+                                        refund.status === 'admin_approved' || refund.status === 'approved' ? 'bg-emerald-500' : 'bg-rose-500'
                                         }`} />
                                     {refund.status === 'admin_approved' ? 'Approved' : refund.status}
                                 </span>
@@ -144,8 +144,8 @@ export default function StudentRefundStatus() {
                                 {/* Step 3: Final Decision - Added 'admin_approved' support */}
                                 <div className="relative z-10 flex flex-col items-center bg-white px-2">
                                     <div className={`flex h-7 w-7 items-center justify-center rounded-full font-semibold text-xs shadow ${refund.status === 'admin_approved' || refund.status === 'approved' ? 'bg-emerald-500 text-white' :
-                                            refund.status === 'rejected' ? 'bg-rose-500 text-white' :
-                                                'bg-slate-200 text-slate-400'
+                                        refund.status === 'rejected' ? 'bg-rose-500 text-white' :
+                                            'bg-slate-200 text-slate-400'
                                         }`}>
                                         {refund.status === 'admin_approved' || refund.status === 'approved' ? '✓' : refund.status === 'rejected' ? '✕' : '3'}
                                     </div>
