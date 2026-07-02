@@ -46,7 +46,8 @@ export default function Sidebar() {
         { name: "RAG Chat", href: "/ask", icon: MessageSquare }, // Ab ye sirf ek baar hai
         { name: "My Course", href: "/mycourse", icon: Settings },
         { name: "Publish Book", href: "/publihsbook", icon: Settings },
-        { name: "Settings", href: "/settings", icon: Settings },
+        { name: "Admin Refund Page", href: "/refundpage", icon: Settings },
+        { name: "Student Refund Page", href: "/studentrefundpage", icon: Settings },
     ];
 
     const footerItems = [
