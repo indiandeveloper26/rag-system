@@ -1,31 +1,32 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import api from '../../src/lib/api';
+import api from '../../src/lib/api'; // Custom api instance use karenge har jagah
 import { useUserStore } from '../../src/lib/store/authStore';
 
-export default function page() {
+export default function Page() {
     const [refunds, setRefunds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { user, } = useUserStore();
+    const { user } = useUserStore();
 
     console.log('user data', user);
 
     // 1. Fetch data from Backend on Component Mount
     useEffect(() => {
-        if (!user?._id) return;
+        if (!user?._id) {
+            setLoading(false);
+            return;
+        }
 
         const fetchRefunds = async () => {
             try {
                 setLoading(true);
-
                 const response = await api.get(`/refund/admin/${user._id}`);
-
-                console.log(response.data);
+                console.log("Fetched Data:", response.data);
 
                 if (response.data.success) {
-                    setRefunds(response.data.data);
+                    setRefunds(response.data.data || []);
                 } else {
                     setError("Data fetch nahi ho paya");
                 }
@@ -40,58 +41,35 @@ export default function page() {
         fetchRefunds();
     }, [user]);
 
-
-
-
-
-
-
-
-
-    const approveRefund = async (refundId) => {
-
-
-
+    // 2. Combined Action Function (Approve aur Reject dono handle karega aur UI update karega)
+    const handleStatusChange = async (refundId, newStatus) => {
         try {
-            const res = await api.put(
-                `/refund/approve/${refundId}`,
-                {
-                    adminId: user._id,
+            let response;
+
+            if (newStatus === 'approved') {
+                // Agar status approve hai toh aapki specific route run hogi
+                response = await api.put(`/refund/approve/${refundId}`, {
+                    adminId: user?._id,
                     comment: "Approved by admin"
-                }
-            );
+                });
+            } else {
+                // Agar reject hai toh general update route (Ya jo bhi aapka route ho)
+                response = await api.put(`/refund/${refundId}`, {
+                    status: newStatus
+                });
+            }
 
-            console.log(res.data);
-        } catch (err) {
-            console.log(err.response?.data || err.message);
-        }
-    };
-
-
-
-
-
-
-
-
-    // 2. Handle Approve / Reject Actions
-    const handleAction = async (id, newStatus) => {
-        try {
-            // Backend status update route (Maan kar chal rahe hain ki aapka route /refund/:id ya /refund/update hai)
-            const response = await axios.put(`http://localhost:5000/refund/${id}`, {
-                status: newStatus
-            });
-
-            if (response.data.success) {
-                // State update taaki UI bina reload kiye change ho jaye
+            // Backend response check (Aapke API structure ke mutabik res.data.success ya direct res.data ho sakta hai)
+            if (response.data) {
+                // UI State Update taaki bina refresh kiye status badal jaye
                 setRefunds(prev =>
-                    prev.map(item => item._id === id ? { ...item, status: newStatus } : item)
+                    prev.map(item => item._id === refundId ? { ...item, status: newStatus } : item)
                 );
                 alert(`Refund request ${newStatus} successfully!`);
             }
         } catch (err) {
             console.error("Action error:", err);
-            alert("Status update karne me error aayi: " + err.message);
+            alert("Status update karne me error aayi: " + (err.response?.data?.message || err.message));
         }
     };
 
@@ -108,8 +86,8 @@ export default function page() {
     // Error State
     if (error) {
         return (
-            <div className="flex min-h-screen items-center justify-center bg-slate-50 text-rose-600 font-medium">
-                Error: {error}. Please ensure your backend is running on port 5000.
+            <div className="flex min-h-screen items-center justify-center bg-slate-50 text-rose-600 font-medium p-4 text-center">
+                Error: {error}. Please ensure your backend is running.
             </div>
         );
     }
@@ -175,8 +153,8 @@ export default function page() {
                                     {/* Course Details */}
                                     <td className="px-6 py-4">
                                         <div>
-                                            <div className="font-medium text-slate-900 capitalize">{refund.courseId?.title}</div>
-                                            <div className="text-xs font-semibold text-indigo-600">₹{refund.courseId?.price}</div>
+                                            <div className="font-medium text-slate-900 capitalize">{refund.courseId?.title || 'N/A'}</div>
+                                            <div className="text-xs font-semibold text-indigo-600">₹{refund.courseId?.price || 0}</div>
                                         </div>
                                     </td>
 
@@ -189,11 +167,11 @@ export default function page() {
 
                                     {/* Date */}
                                     <td className="px-6 py-4 whitespace-nowrap text-slate-500">
-                                        {new Date(refund.createdAt).toLocaleDateString('en-IN', {
+                                        {refund.createdAt ? new Date(refund.createdAt).toLocaleDateString('en-IN', {
                                             day: 'numeric',
                                             month: 'short',
                                             year: 'numeric'
-                                        })}
+                                        }) : 'N/A'}
                                     </td>
 
                                     {/* Status Badges */}
@@ -215,13 +193,13 @@ export default function page() {
                                         {refund.status === 'pending' ? (
                                             <div className="flex justify-end gap-2">
                                                 <button
-                                                    onClick={() => handleAction(refund._id, 'rejected')}
+                                                    onClick={() => handleStatusChange(refund._id, 'rejected')}
                                                     className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:text-rose-600 transition-all"
                                                 >
                                                     Reject
                                                 </button>
                                                 <button
-                                                    onClick={() => approveRefund(refund._id, 'approved')}
+                                                    onClick={() => handleStatusChange(refund._id, 'approved')}
                                                     className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-indigo-700 shadow-sm transition-all"
                                                 >
                                                     Approve Refund

@@ -6,11 +6,19 @@ import { usePathname } from "next/navigation";
 import {
     LayoutDashboard,
     FileUp,
-    MessageSquare,
+
     LogOut,
     LogIn,
     Settings,
     HelpCircle,
+
+    BookOpen,
+    FileText,
+    MessageSquare,
+    GraduationCap,
+    BookMarked,
+    ShieldAlert,
+    UserCheck,
     Layers,
     User,
     Import
@@ -41,13 +49,13 @@ export default function Sidebar() {
     // Navigation Links Array (Dynamic structure)
     const menuItems = [
         { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-        { name: "Get Course", href: "/getcourse", icon: LayoutDashboard }, // Agar ye alag dashboard hai
-        { name: "Upload PDF", href: "/upload", icon: FileUp },
-        { name: "RAG Chat", href: "/ask", icon: MessageSquare }, // Ab ye sirf ek baar hai
-        { name: "My Course", href: "/mycourse", icon: Settings },
-        { name: "Publish Book", href: "/publihsbook", icon: Settings },
-        { name: "Admin Refund Page", href: "/refundpage", icon: Settings },
-        { name: "Student Refund Page", href: "/studentrefundpage", icon: Settings },
+        { name: "Get Course", href: "/getcourse", icon: BookOpen }, // Course ke liye BookOpen icon better hai
+        { name: "Admin Policy", href: "/upload", icon: FileText }, // Policy ke liye FileText icon
+        { name: "RAG Chat", href: "/ask", icon: MessageSquare },
+        { name: "My Course", href: "/mycourse", icon: GraduationCap }, // Student courses ke liye GraduationCap
+        { name: "Publish Book", href: "/publihsbook", icon: BookMarked }, // TYPO FIXED: "/publihsbook" ko "/publishbook" kiya
+        { name: "Admin Refund Page", href: "/refundpage", icon: ShieldAlert }, // Admin action ke liye Shield/Alert icon
+        { name: "Student Refund Page", href: "/studentrefundpage", icon: UserCheck }, // Student side ke liye UserCheck ya Wallet icon
     ];
 
     const footerItems = [
@@ -179,7 +187,7 @@ export default function Sidebar() {
                     ) : (
                         // 🔒 Login Button (Jab User Logged Out Ho - Matching Premium Layout)
                         <button
-                            onClick={() => /* Aapka login navigation ya function yahan aayega */ { }}
+                            onClick={() => router.push("/login")}
                             className="w-full flex items-center gap-3.5 px-4 py-2.5 text-xs font-medium rounded-xl text-indigo-400 hover:text-white bg-indigo-600/10 hover:bg-indigo-600 border border-indigo-500/20 hover:border-indigo-500 transition-all text-left group"
                         >
                             <LogIn size={16} className="text-indigo-400 group-hover:text-white transition-colors" />
