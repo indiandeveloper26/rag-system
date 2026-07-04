@@ -10,6 +10,10 @@ export function proxy(request) {
 
 
 
+    console.log("proxy  route");
+
+
+
     const pathname = request.nextUrl.pathname;
     console.log("proxy  Cookies:", request.cookies.getAll());
     console.log(" proxy Token:", request.cookies.get("token")?.value);
