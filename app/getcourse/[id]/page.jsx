@@ -76,9 +76,12 @@ export default function page() {
                             userId: user?._id
                         });
 
+
+                        console.log('Payment verification response:', verifyResponse.data);
+
                         if (verifyResponse.data.success) {
                             alert("🎉 Badhai ho! Payment successful.");
-                            router.push('/dashboard');
+                            router.push('/mycourse');
                         } else {
                             alert("❌ Payment verification fail ho gayi.");
                         }
