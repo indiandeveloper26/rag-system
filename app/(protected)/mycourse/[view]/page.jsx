@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import useCourseStore from '../../../src/lib/store/course';
+import useCourseStore from '../../../../src/lib/store/course';
 
 import { useRouter } from 'next/navigation';
 // Zustand store ko import kiya (apne folder structure ke mutabik path check kar lein)

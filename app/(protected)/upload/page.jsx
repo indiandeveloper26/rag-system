@@ -2,7 +2,8 @@
 
 import { useState, useRef } from "react";
 import { UploadCloud, FileText, CheckCircle2, Loader2, ExternalLink, Copy } from "lucide-react";
-import api from "../../src/lib/api";
+import api from "../../../src/lib/api";
+
 
 export default function Page() {
     const [pdfUrl, setPdfUrl] = useState("");

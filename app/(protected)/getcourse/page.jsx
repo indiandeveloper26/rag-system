@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import api from '../../src/lib/api';
+import api from '../../../src/lib/api';
 import Link from 'next/link';
 
 // UI Helper: Premium Blue/Dark Theme Skeleton Card Component

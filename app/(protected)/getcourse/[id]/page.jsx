@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Script from 'next/script';
-import api from '../../../src/lib/api';
-import { useUserStore } from '../../../src/lib/store/authStore';
+import api from '../../../../src/lib/api';
+import { useUserStore } from '../../../../src/lib/store/authStore';
 
 export default function page() {
     const { id } = useParams();

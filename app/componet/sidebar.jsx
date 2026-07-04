@@ -69,7 +69,7 @@ export default function Sidebar() {
                     <div className="p-1.5 bg-indigo-600 rounded-lg text-white">
                         <Layers size={16} />
                     </div>
-                    <span className="text-sm font-bold text-white tracking-wider uppercase">Nexus AI</span>
+                    <span className="text-sm font-bold text-white tracking-wider uppercase">Nexus AItt</span>
                 </div>
 
                 <button

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { useUserStore } from "../../src/lib/store/authStore"; // Aapka Zustand store
-import api from "../../src/lib/api"; // Aapka Axios instance
+import { useUserStore } from "../../../src/lib/store/authStore"; // Aapka Zustand store
+import api from "../../../src/lib/api"; // Aapka Axios instance
 import { useRouter } from "next/navigation";
 import { PlusCircle, FileText, IndianRupee, Video, Layers, Loader2, CheckCircle2 } from "lucide-react";
 

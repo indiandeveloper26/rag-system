@@ -11,8 +11,8 @@ import {
     CheckCircle2,
     Clock
 } from "lucide-react";
-import api from "../../../src/lib/api";
-import { useUserStore } from "../../../src/lib/store/authStore";
+import api from "../../../../src/lib/api";
+import { useUserStore } from "../../../../src/lib/store/authStore";
 import { useParams } from "next/navigation";
 
 export default function page() {

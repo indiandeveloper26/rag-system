@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import api from '../../src/lib/api';
-import { useUserStore } from '../../src/lib/store/authStore';
+import api from '../../../src/lib/api';
+import { useUserStore } from '../../../src/lib/store/authStore';
 import {
     Clock,
     CheckCircle,
@@ -283,8 +283,8 @@ export default function Page() {
                                                 {/* Timeline Line */}
                                                 <div className="absolute left-[15%] right-[15%] top-1/2 h-0.5 -translate-y-1/2 bg-slate-700">
                                                     <div className={`h-full transition-all duration-700 ${refund.status === 'approved' || refund.status === 'admin_approved' ? 'w-full bg-emerald-500' :
-                                                            refund.status === 'rejected' ? 'w-2/3 bg-rose-500' :
-                                                                'w-1/3 bg-amber-500'
+                                                        refund.status === 'rejected' ? 'w-2/3 bg-rose-500' :
+                                                            'w-1/3 bg-amber-500'
                                                         }`} />
                                                 </div>
 
@@ -299,9 +299,9 @@ export default function Page() {
                                                 {/* Step 2: Review */}
                                                 <div className="relative z-10 flex flex-col items-center">
                                                     <div className={`flex h-9 w-9 items-center justify-center rounded-full font-bold text-sm shadow-lg ${refund.status === 'pending' ? 'bg-amber-500 text-white shadow-amber-500/25 animate-pulse' :
-                                                            refund.status === 'approved' || refund.status === 'admin_approved' ? 'bg-emerald-500 text-white shadow-emerald-500/25' :
-                                                                refund.status === 'rejected' ? 'bg-rose-500 text-white shadow-rose-500/25' :
-                                                                    'bg-slate-600 text-slate-400'
+                                                        refund.status === 'approved' || refund.status === 'admin_approved' ? 'bg-emerald-500 text-white shadow-emerald-500/25' :
+                                                            refund.status === 'rejected' ? 'bg-rose-500 text-white shadow-rose-500/25' :
+                                                                'bg-slate-600 text-slate-400'
                                                         }`}>
                                                         {refund.status === 'pending' ? '...' : '✓'}
                                                     </div>
@@ -311,8 +311,8 @@ export default function Page() {
                                                 {/* Step 3: Decision */}
                                                 <div className="relative z-10 flex flex-col items-center">
                                                     <div className={`flex h-9 w-9 items-center justify-center rounded-full font-bold text-sm shadow-lg ${refund.status === 'approved' || refund.status === 'admin_approved' ? 'bg-emerald-500 text-white shadow-emerald-500/25' :
-                                                            refund.status === 'rejected' ? 'bg-rose-500 text-white shadow-rose-500/25' :
-                                                                'bg-slate-600 text-slate-400'
+                                                        refund.status === 'rejected' ? 'bg-rose-500 text-white shadow-rose-500/25' :
+                                                            'bg-slate-600 text-slate-400'
                                                         }`}>
                                                         {refund.status === 'approved' || refund.status === 'admin_approved' ? '✓' :
                                                             refund.status === 'rejected' ? '✕' : '?'}
@@ -326,8 +326,8 @@ export default function Page() {
 
                                             {/* Status Message */}
                                             <div className={`mt-5 text-center text-xs font-medium px-4 py-2 rounded-lg ${refund.status === 'pending' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
-                                                    refund.status === 'approved' || refund.status === 'admin_approved' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
-                                                        'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                                                refund.status === 'approved' || refund.status === 'admin_approved' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                                                    'bg-rose-500/10 text-rose-400 border border-rose-500/20'
                                                 }`}>
                                                 {refund.status === 'pending' ? '⏳ Your request is being reviewed by the admin team' :
                                                     refund.status === 'approved' || refund.status === 'admin_approved' ? '✅ Your refund has been approved successfully!' :

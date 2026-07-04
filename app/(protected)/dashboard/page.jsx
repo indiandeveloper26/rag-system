@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import api from "../../src/lib/api"
-import { useUserStore } from '../../src/lib/store/authStore';
+import api from "../../../src/lib/api"
+import { useUserStore } from '../../../src/lib/store/authStore';
 
 export default function Page() {
     const [balance, setBalance] = useState(null);
@@ -11,7 +11,25 @@ export default function Page() {
 
     const { user } = useUserStore();
 
-    console.log('users data here', user?._id)
+    console.log('users data here', user)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     useEffect(() => {
         if (!user?._id) return;

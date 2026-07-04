@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Loader2, RefreshCw, AlertCircle } from "lucide-react";
-import api from "../../src/lib/api";
+import api from "../../../src/lib/api";
 
 
 export default function Page() {

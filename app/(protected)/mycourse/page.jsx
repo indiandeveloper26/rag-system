@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import api from '../../src/lib/api';
+import api from '../../../src/lib/api';
 import Link from 'next/link';
-import useCourseStore from '../../src/lib/store/course';
+import useCourseStore from '../../../src/lib/store/course';
 import { useRouter } from 'next/navigation';
-import { useUserStore } from '../../src/lib/store/authStore';
+import { useUserStore } from '../../../src/lib/store/authStore';
 
 const MyCoursesPage = () => {
     const [enrollments, setEnrollments] = useState([]);
