@@ -11,7 +11,8 @@ export function proxy(request) {
 
 
     const pathname = request.nextUrl.pathname;
-
+    console.log("proxy  Cookies:", request.cookies.getAll());
+    console.log(" proxy Token:", request.cookies.get("token")?.value);
 
 
     // public routes
