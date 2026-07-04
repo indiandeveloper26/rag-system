@@ -5,96 +5,96 @@ import jwt from "jsonwebtoken";
 export function proxy(request) {
 
 
-    const token =
-        request.cookies.get("token")?.value;
+    // const token =
+    //     request.cookies.get("token")?.value;
 
 
 
-    console.log("proxy  route");
+    // console.log("proxy  route");
 
 
 
-    const pathname = request.nextUrl.pathname;
-    console.log("proxy  Cookies:", request.cookies.getAll());
-    console.log(" proxy Token:", request.cookies.get("token")?.value);
+    // const pathname = request.nextUrl.pathname;
+    // console.log("proxy  Cookies:", request.cookies.getAll());
+    // console.log(" proxy Token:", request.cookies.get("token")?.value);
 
 
-    // public routes
-    const publicRoutes = [
-        "/login",
-        "/register",
+    // // public routes
+    // const publicRoutes = [
+    //     "/login",
+    //     "/register",
 
-    ];
-
-
-
-    if (publicRoutes.includes(pathname)) {
-
-        return NextResponse.next();
-
-    }
+    // ];
 
 
 
-    // token nahi hai
-    if (!token) {
+    // if (publicRoutes.includes(pathname)) {
 
+    //     return NextResponse.next();
 
-        return NextResponse.redirect(
-            new URL("/login", request.url)
-        );
-
-
-    }
+    // }
 
 
 
-    try {
+    // // token nahi hai
+    // if (!token) {
 
 
-        // JWT verify
-
-        jwt.verify(
-            token,
-            process.env.JWT_SECRET
-        );
+    //     return NextResponse.redirect(
+    //         new URL("/login", request.url)
+    //     );
 
 
-
-        // valid user
-        return NextResponse.next();
+    // }
 
 
 
-    }
-    catch (error) {
+    // try {
 
 
-        // invalid token
+    //     // JWT verify
 
-        const response =
-            NextResponse.redirect(
-                new URL("/login", request.url)
-            );
-
-
-        // old cookie delete
-
-        response.cookies.delete("token");
+    //     jwt.verify(
+    //         token,
+    //         process.env.JWT_SECRET
+    //     );
 
 
-        return response;
+
+    //     // valid user
+    //     return NextResponse.next();
 
 
-    }
+
+    // }
+    // catch (error) {
+
+
+    //     // invalid token
+
+    //     const response =
+    //         NextResponse.redirect(
+    //             new URL("/login", request.url)
+    //         );
+
+
+    //     // old cookie delete
+
+    //     response.cookies.delete("token");
+
+
+    //     return response;
+
+
+    // }
 
 }
 
 
 
-export const config = {
-    matcher: [
-        // api aur next internal files ko chhod do
-        "/((?!api|_next/static|_next/image|favicon.ico).*)"
-    ]
-};
+// export const config = {
+//     matcher: [
+//         // api aur next internal files ko chhod do
+//         "/((?!api|_next/static|_next/image|favicon.ico).*)"
+//     ]
+// };
