@@ -46,7 +46,7 @@ export default function Sidebar() {
     ];
 
     const footerItems = [
-        { name: "Help & Support", href: "/support", icon: HelpCircle },
+        { name: "Help & Support", href: "/ask", icon: HelpCircle },
     ];
 
     const logout = async () => {
