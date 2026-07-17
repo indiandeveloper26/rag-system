@@ -38,7 +38,7 @@ export default function Sidebar() {
         { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
         { name: "Get Course", href: "/getcourse", icon: BookOpen },
         { name: "Admin Policy", href: "/upload", icon: FileText },
-        { name: "RAG Chat", href: "/ask", icon: MessageSquare },
+
         { name: "My Course", href: "/mycourse", icon: GraduationCap },
         { name: "Publish Book", href: "/publihsbook", icon: BookMarked },
         { name: "Admin Refund Page", href: "/refundpage", icon: ShieldAlert },
@@ -69,7 +69,7 @@ export default function Sidebar() {
                     <div className="p-1.5 bg-indigo-600 rounded-lg text-white">
                         <Layers size={16} />
                     </div>
-                    <span className="text-sm font-bold text-white tracking-wider uppercase">Nexus AItt</span>
+                    <span className="text-sm font-bold text-white tracking-wider uppercase">Nexus AI</span>
                 </div>
 
                 <button
@@ -102,8 +102,12 @@ export default function Sidebar() {
                                 <Layers size={20} />
                             </div>
                             <div>
-                                <h2 className="text-sm font-bold tracking-wider text-white uppercase">Nexus AI</h2>
-                                <p className="text-[10px] text-indigo-400 font-medium">Enterprise RAG Portal</p>
+                                <h2 className="text-sm font-bold tracking-wider text-white uppercase">
+                                    CourseFlow AI
+                                </h2>
+                                <p className="text-[10px] text-indigo-400 font-medium">
+                                    AI-Powered Learning Marketplace
+                                </p>
                             </div>
                         </div>
                         {/* Mobile Side Close Trigger */}

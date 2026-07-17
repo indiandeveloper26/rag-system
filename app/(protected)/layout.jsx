@@ -1,35 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "../../src/lib/store/authStore";
 
 export default function ProtectedLayout({ children }) {
     const router = useRouter();
-    const { user, isLogin } = useUserStore();
 
-    const [loading, setLoading] = useState(true);
+    const { isLogin } = useUserStore();
 
-    console.log('islogin', isLogin)
+    // Zustand persist hydration
+    const hasHydrated = useUserStore.persist.hasHydrated();
 
     useEffect(() => {
-        // optional debug
-        const stored = localStorage.getItem("user-storage");
-        // console.log("localStorage user:", stored);
-
-        if (user === undefined) return;
+        if (!hasHydrated) return;
 
         if (!isLogin) {
-
-
             router.replace("/login");
-        } else {
-            setLoading(false);
         }
-    }, [user]);
+    }, [hasHydrated, isLogin, router]);
 
-    if (loading) {
-        return <div>Loading...</div>;
+    // Jab tak Zustand hydrate na ho tab tak kuch mat dikhao
+    if (!hasHydrated) {
+        return (
+            <div className="h-screen flex items-center justify-center">
+                Loading...
+            </div>
+        );
+    }
+
+    // Hydration ke baad login nahi hai
+    if (!isLogin) {
+        return null;
     }
 
     return children;
